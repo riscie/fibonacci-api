@@ -39,8 +39,8 @@ func FibonacciHandler(w http.ResponseWriter, r *http.Request, p httprouter.Param
 		return
 	}
 
-	if n > 100 {
-		http.Error(w, "Sequences greater than 100 are not allowed.", http.StatusInternalServerError)
+	if n > 93 {
+		http.Error(w, "Sequences greater than 93 are not allowed. (unit64 overflow)", http.StatusInternalServerError)
 		return
 	}
 
@@ -55,15 +55,15 @@ func FibonacciHandler(w http.ResponseWriter, r *http.Request, p httprouter.Param
 	w.Write(fib)
 }
 
-func fibonacciSlice(n int) []int {
+func fibonacciSlice(n int) []uint64 {
 	if n == 0 {
-		return []int{0}
+		return []uint64{0}
 	}
 	if n == 1 {
-		return []int{0, 1}
+		return []uint64{0, 1}
 	}
 
-	fib := []int{0, 1, 1}
+	fib := []uint64{0, 1, 1}
 	for i := 0; i < n-2; i++ {
 		fib = append(fib, fib[len(fib)-1]+fib[len(fib)-2])
 	}
